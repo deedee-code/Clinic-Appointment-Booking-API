@@ -21,11 +21,14 @@ Requirements: Node.js 20+ and a PostgreSQL database.
 
 Appointments load automatically. Run `npm test` and `npm run typecheck` to validate changes. Tests use an embedded database and do not modify your configured database.
 
+Open the API reference at <http://localhost:3000/docs>. Use Swagger UI’s **Authorize** control to provide `X-API-Key` when trying the direct API endpoints. The OpenAPI document is available at `/docs/json`.
+
 ## How it works
 
 - The API provides slot listing, booking, lookup, cancellation, booking history, and pagination.
 - Direct API requests require `X-API-Key`. The browser does not receive this key; it calls the same-origin `/web` routes, which inject the key on the server.
 - `/web` exposes only patient booking operations. It does not expose `/reset`.
+- Swagger documents the authenticated contract routes; the patient `/web` proxy is intentionally excluded.
 - The database prevents double-booking, stores idempotency results, and enforces the per-email booking-attempt limit.
 - The page is plain HTML, CSS, and JavaScript modules in `public/`.
 
@@ -65,4 +68,4 @@ Pass the response’s `next_cursor` as `cursor` to fetch the next page. `POST /r
 
 ## Deploy on Render
 
-`render.yaml` defines the Render service. Connect the repository as a Render Blueprint, set `DATABASE_URL` and `API_KEY` as secret environment variables, and deploy. The configured pre-deploy command runs migrations and seeds future sample slots. Deployment must be completed from a connected Render account.
+`render.yaml` defines the Render service. Connect the repository as a Render Blueprint, set `DATABASE_URL` and `API_KEY` as secret environment variables, and deploy. The configured pre-deploy command runs migrations and seeds future sample slots. After deployment, Swagger UI is available at `/docs` and its OpenAPI document at `/docs/json`. Deployment must be completed from a connected Render account.

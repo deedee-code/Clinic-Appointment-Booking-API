@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f1f5f4">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f1f5f4" />
     <title>Appointments | Morrowfield Medical</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles.css" />
     <script type="module" src="/js/main.js"></script>
   </head>
   <body>
@@ -22,68 +22,158 @@
       <section class="hero" aria-labelledby="page-title">
         <div class="hero-copy">
           <h1 id="page-title">Book an appointment</h1>
-          <p class="hero-intro">Morrowfield Medical is an online service for booking clinic appointments. Browse available times, choose one that suits you, then use your booking details to review or cancel your appointment.</p>
+          <p class="hero-intro">
+            Morrowfield Medical is an online service for booking clinic
+            appointments. Browse available times, choose one that suits you,
+            then use your booking details to review or cancel your appointment.
+          </p>
         </div>
       </section>
 
-      <div id="status-message" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+      <div
+        id="status-message"
+        class="sr-only"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></div>
       <div id="error-message" class="error-banner" role="alert" hidden></div>
 
       <div class="booking-layout">
-        <section id="appointments" class="appointments" aria-labelledby="appointments-heading">
+        <section
+          id="appointments"
+          class="appointments"
+          aria-labelledby="appointments-heading"
+        >
           <div class="section-heading">
             <div>
               <h2 id="appointments-heading">Available appointments</h2>
-              <p class="section-intro">Times shown in <span id="time-zone-label"></span>.</p>
+              <p class="section-intro">
+                Times shown in <span id="time-zone-label"></span>.
+              </p>
             </div>
-            <button id="refresh-button" class="button-secondary" type="button">Refresh times</button>
+            <button id="refresh-button" class="button-secondary" type="button">
+              Refresh times
+            </button>
           </div>
-          <div id="day-selector" class="day-selector" role="group" aria-label="Appointment days"></div>
-          <div id="slot-list" class="slot-list" aria-label="Available appointment times" tabindex="-1"></div>
+          <div
+            id="day-selector"
+            class="day-selector"
+            role="group"
+            aria-label="Appointment days"
+          ></div>
+          <div
+            id="slot-list"
+            class="slot-list"
+            aria-label="Available appointment times"
+            tabindex="-1"
+          ></div>
           <div id="slot-state" class="slot-state" hidden></div>
         </section>
 
-        <section id="booking-section" class="booking-panel" aria-labelledby="booking-heading" hidden>
+        <section
+          id="booking-section"
+          class="booking-panel"
+          aria-labelledby="booking-heading"
+          hidden
+        >
           <div class="booking-heading">
             <p class="section-kicker">Your appointment</p>
-            <h2 id="booking-heading" tabindex="-1">A few details, then you’re done.</h2>
+            <h2 id="booking-heading" tabindex="-1">
+              A few details, then you’re done.
+            </h2>
             <p id="selected-slot" class="selected-slot"></p>
-            <a id="change-time" class="text-link" href="#appointments">Change time</a>
+            <a id="change-time" class="text-link" href="#appointments"
+              >Change time</a
+            >
           </div>
           <form id="booking-form" class="booking-form" novalidate>
             <div class="form-field">
               <label for="name">Full name</label>
-              <input id="name" name="name" type="text" autocomplete="name" maxlength="200" required aria-describedby="name-error">
+              <input
+                id="name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                maxlength="200"
+                required
+                aria-describedby="name-error"
+              />
               <span id="name-error" class="field-error" hidden></span>
             </div>
             <div class="form-field">
               <label for="email">Email address</label>
-              <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="email-error">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                maxlength="254"
+                required
+                aria-describedby="email-error"
+              />
               <span id="email-error" class="field-error" hidden></span>
             </div>
             <p id="booking-error" class="form-error" hidden></p>
-            <button id="submit-button" type="submit">Confirm appointment</button>
+            <button id="submit-button" type="submit">
+              Confirm appointment
+            </button>
           </form>
         </section>
       </div>
 
-      <section id="confirmation" class="confirmation" aria-labelledby="confirmation-heading" hidden>
+      <section
+        id="confirmation"
+        class="confirmation"
+        aria-labelledby="confirmation-heading"
+        hidden
+      >
         <div class="confirmation-icon" aria-hidden="true">✓</div>
         <div class="confirmation-content">
           <p class="section-kicker">Appointment details</p>
-          <h2 id="confirmation-heading" tabindex="-1">Your appointment is confirmed.</h2>
+          <h2 id="confirmation-heading" tabindex="-1">
+            Your appointment is confirmed.
+          </h2>
           <p class="confirmation-copy">Keep these details for your records.</p>
           <dl id="confirmation-details" class="details-list"></dl>
           <div class="confirmation-actions">
-            <button id="copy-id-button" class="button-secondary" type="button">Copy booking ID</button>
-            <button id="calendar-button" class="button-secondary" type="button">Add to calendar</button>
-            <button id="cancel-button" class="button-secondary button-danger" type="button">Cancel this appointment</button>
-            <button id="book-another-button" class="button-secondary" type="button">Book another appointment</button>
+            <button id="copy-id-button" class="button-secondary" type="button">
+              Copy booking ID
+            </button>
+            <button id="calendar-button" class="button-secondary" type="button">
+              Add to calendar
+            </button>
+            <button
+              id="cancel-button"
+              class="button-secondary button-danger"
+              type="button"
+            >
+              Cancel this appointment
+            </button>
+            <button
+              id="book-another-button"
+              class="button-secondary"
+              type="button"
+            >
+              Book another appointment
+            </button>
           </div>
           <p id="cancel-confirm" class="cancel-confirm" hidden>
             <span>Cancel appointment?</span>
-            <button id="confirm-cancel-button" type="button" class="button-danger">Yes, cancel</button>
-            <button id="keep-appointment-button" type="button" class="button-secondary">Keep it</button>
+            <button
+              id="confirm-cancel-button"
+              type="button"
+              class="button-danger"
+            >
+              Yes, cancel
+            </button>
+            <button
+              id="keep-appointment-button"
+              type="button"
+              class="button-secondary"
+            >
+              Keep it
+            </button>
           </p>
         </div>
       </section>
@@ -96,7 +186,13 @@
             <form id="lookup-form" class="inline-form">
               <label for="lookup-id">Booking ID</label>
               <div class="field-row">
-                <input id="lookup-id" name="id" type="text" maxlength="200" required>
+                <input
+                  id="lookup-id"
+                  name="id"
+                  type="text"
+                  maxlength="200"
+                  required
+                />
                 <button type="submit">Find booking</button>
               </div>
             </form>
@@ -107,24 +203,47 @@
             <form id="my-bookings-form" class="inline-form">
               <label for="history-email">Email address used to book</label>
               <div class="field-row">
-                <input id="history-email" name="email" type="email" maxlength="254" required>
+                <input
+                  id="history-email"
+                  name="email"
+                  type="email"
+                  maxlength="254"
+                  required
+                />
                 <button type="submit">Show bookings</button>
               </div>
             </form>
-            <div id="my-bookings-list" class="history-list" aria-live="off"></div>
-            <button id="load-more-button" class="button-secondary" type="button" hidden>Load more</button>
+            <div
+              id="my-bookings-list"
+              class="history-list"
+              aria-live="off"
+            ></div>
+            <button
+              id="load-more-button"
+              class="button-secondary"
+              type="button"
+              hidden
+            >
+              Load more
+            </button>
           </section>
         </div>
       </details>
-
     </main>
 
     <noscript>
-      <p class="noscript-message">Online booking needs JavaScript. Please contact the clinic directly to arrange an appointment. Phone: [clinic contact number]</p>
+      <p class="noscript-message">
+        Online booking needs JavaScript. Please contact the clinic directly to
+        arrange an appointment. Phone: 0000-000-0000
+      </p>
     </noscript>
 
     <footer class="site-footer">
-      <a class="brand brand-footer" href="/" aria-label="Morrowfield Medical home">
+      <a
+        class="brand brand-footer"
+        href="/"
+        aria-label="Morrowfield Medical home"
+      >
         <span class="brand-mark" aria-hidden="true">M</span>
         <span class="brand-name">Morrowfield <span>Medical</span></span>
       </a>

@@ -16,6 +16,9 @@ import { registerSlotsRoutes } from "./modules/slots/slots.routes.js";
 import { SlotsRepository } from "./modules/slots/slots.repository.js";
 import { SlotsService } from "./modules/slots/slots.service.js";
 import { registerWebProxyRoutes } from "./modules/web-proxy/web-proxy.routes.js";
+import swagger from "@fastify/swagger";
+import swaggerUi from "@fastify/swagger-ui";
+import { openApiDocument } from "./openapi.js";
 
 export type AppOptions = {
   config: AppConfig;
@@ -43,6 +46,20 @@ export async function buildApp(options: AppOptions): Promise<FastifyInstance> {
   });
   app.addHook("onClose", async () => {
     await pool.end();
+  });
+  await app.register(swagger, {
+    mode: "static",
+    specification: {
+      document: openApiDocument,
+    },
+  });
+  await app.register(swaggerUi, {
+    routePrefix: "/docs",
+    uiConfig: {
+      docExpansion: "list",
+      deepLinking: true,
+    },
+    staticCSP: true,
   });
   await app.register(fastifyStatic, {
     root: options.publicDirectory ?? path.resolve("public"),

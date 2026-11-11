@@ -94,9 +94,10 @@ describe("booking API contract", () => {
   it("serves the Morrowfield booking page without exposing the API key in source", async () => {
     const response = await app.inject({ method: "GET", url: "/" });
     expect(response.statusCode).toBe(200);
-    expect(response.body).toContain("Morrowfield Medical");
-    expect(response.body).toContain("Book an appointment");
-    expect(response.body).toContain("online service for booking clinic appointments");
+    const page = response.body.replace(/\s+/g, " ");
+    expect(page).toContain("Morrowfield Medical");
+    expect(page).toContain("Book an appointment");
+    expect(page).toContain("online service for booking clinic appointments");
     expect(response.body).toContain('type="module" src="/js/main.js"');
     expect(response.body).not.toContain("api-key");
     const module = await app.inject({ method: "GET", url: "/js/main.js" });
@@ -104,6 +105,29 @@ describe("booking API contract", () => {
     expect(module.headers["content-type"]).toContain("javascript");
     const script = await readFile(path.resolve("public/js/api.js"), "utf8");
     expect(script).not.toContain("X-API-Key");
+  });
+
+  it("serves Swagger UI and the authenticated contract OpenAPI document", async () => {
+    const ui = await app.inject({ method: "GET", url: "/docs" });
+    expect(ui.statusCode).toBe(200);
+    expect(ui.body).toContain("swagger-ui");
+
+    const document = await app.inject({ method: "GET", url: "/docs/json" });
+    expect(document.statusCode).toBe(200);
+    expect(document.json()).toMatchObject({
+      openapi: "3.0.3",
+      info: { title: "Morrowfield Medical Booking API" },
+      components: {
+        securitySchemes: {
+          ApiKeyAuth: { type: "apiKey", in: "header", name: "X-API-Key" },
+        },
+      },
+    });
+    expect(document.json().paths).toHaveProperty("/slots");
+    expect(document.json().paths).toHaveProperty("/bookings");
+    expect(document.json().paths).toHaveProperty("/bookings/{id}");
+    expect(document.json().paths).toHaveProperty("/reset");
+    expect(document.json().paths).not.toHaveProperty("/web/slots");
   });
 
   it("proxies patient routes with server-side auth and preserves idempotency", async () => {
