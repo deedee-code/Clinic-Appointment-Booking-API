@@ -1,0 +1,8 @@
+node_modules/
+.neon
+.env
+.env.*
+!.env.example
+dist/
+coverage/
+.env.local
